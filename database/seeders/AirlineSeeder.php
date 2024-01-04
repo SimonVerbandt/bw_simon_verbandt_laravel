@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Airline;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -20,8 +21,8 @@ class AirlineSeeder extends Seeder
             $logo = base_path('/public/airlines-logos-dataset-master/images/' . $obj->icao_code . '.png');
             $airline = Airline::create([
                 'name' => $obj -> name,
-                'iata' => $obj -> iata,
-                'icao' => $obj -> icao,
+                'iata_code' => $obj -> iata_code,
+                'icao_code' => $obj -> icao_code,
                 'fleet_size' => $obj -> num_aircraft,
                 'logo' => $logo,
             ]);
