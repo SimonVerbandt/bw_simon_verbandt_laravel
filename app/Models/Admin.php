@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Airline extends Model
+class Admin extends Model
 {
     use HasFactory;
 
+    protected $table = 'admins';
     protected $fillable = [
+        'id',
+        'user_id',
         'name',
-        'iata',
-        'icao',
-        'fleet_size',
-        'logo',
+        'email',
     ];
 
-    public function articles()
+    public function user()
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsTo(User::class);
     }
 }
