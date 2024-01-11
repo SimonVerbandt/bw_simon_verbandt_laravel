@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('contact_forms', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('username');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('content');
+        });
+        Schema::table('contact_forms', function (Blueprint $table) {
+            $table->foreignId('username')->constrained('users')->onDelete('cascade');
         });
     }
 

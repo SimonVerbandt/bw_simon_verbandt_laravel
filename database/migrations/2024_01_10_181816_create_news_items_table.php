@@ -18,7 +18,9 @@ return new class extends Migration
             $table->text('image');
             $table->text('content');
             $table->date('published_at');
-
+        });
+        Schema::table('news_items', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }
 
