@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\UserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,17 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::middleware(UserIsAdmin::class)->group(function () {
+    Route::post('/faq/create', [FaqController::class, 'create'])->name('faq.create');
+    Route::post('/faq/edit', [FaqController::class, 'edit'])->name('faq.edit');
+    Route::delete('/faq/delete', [FaqController::class, 'destroy'])->name('faq.destroy');
+    Route::post('/faq/category/create', [FaqController::class, 'createCategory'])->name('faq.category.create');
+    Route::post('/faq/category/edit', [FaqController::class, 'editCategory'])->name('faq.category.edit');
+    Route::delete('/faq/category/delete', [FaqController::class, 'destroyCategory'])->name('faq.category.destroy');
+});
+
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::get('/faq/category', [FaqController::class, 'indexCategory'])->name('faq.category.index');
 
 
 require __DIR__.'/auth.php';
