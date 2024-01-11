@@ -43,7 +43,8 @@ Route::middleware(UserIsAdmin::class)->group(function () {
 });
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-Route::get('/faq/category', [FaqController::class, 'indexCategory'])->name('faq.category.index');
+Route::get('/faq/{category}', [FaqController::class, 'showCategory'])->name('faq.category.show');
+//TODO: Fix the route and controller method for showing a single FAQ category
 
 
 require __DIR__.'/auth.php';

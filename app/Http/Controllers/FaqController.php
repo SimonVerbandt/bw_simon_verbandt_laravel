@@ -63,7 +63,7 @@ class FaqController extends Controller
             return redirect()->route('faq.index');
         }
     }
-    
+
     public function destroy(Request $request)
     {
         $user = Auth::user();
@@ -75,12 +75,23 @@ class FaqController extends Controller
         return redirect()->route('faq.index');
     }
 
-    public function indexCategory()
+    public function showCategory($category)
     {
-        return view('faq.category.index', [
-            'categories' => FaqCategory::all(),
-        ]);
+        $categoryModel = FaqCategory::where('name', $category)->first();
+
+        if (!$categoryModel) {
+            return redirect()->route('faq.index')->withErrors(['error' => 'Category not found']);
+        }
+
+        $faqs = $categoryModel-> faqs;
+        dd($faqs);
+
+        return view('faq.category.show', [
+            'category' => $categoryModel->name,
+            'faqs' => $faqs,
+        ]); //TODO: Fix this shit
     }
+
 
     public function createCategory(Request $request)
     {

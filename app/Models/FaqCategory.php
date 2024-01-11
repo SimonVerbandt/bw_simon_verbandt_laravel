@@ -4,20 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\FaqQuestion;
-use App\Models\FaqAnswer;
 
 class FaqCategory extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'name',
         'slug',
-        'faq_category_id'
+        'faqs'
+
     ];
 
     public function faqs(){
-        return $this->hasMany(Faq::class);
+        return $this->hasMany(Faq::class, 'id');
     }
 
 

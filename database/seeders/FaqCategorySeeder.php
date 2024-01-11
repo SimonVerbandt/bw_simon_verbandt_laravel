@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\FaqCategory;
+use App\Models\Faq;
+
 
 class FaqCategorySeeder extends Seeder
 {
@@ -12,12 +14,25 @@ class FaqCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        FaqCategory::create([
+        $general = FaqCategory::create([
             'name' => 'General',
+
         ]);
 
-        FaqCategory::create([
+        $account = FaqCategory::create([
             'name' => 'Account Information',
         ]);
+
+        $this->getFaqs($general, 'General');
+        $this->getFaqs($account, 'Account Information');
+
+    }
+
+    private function getFaqs(FaqCategory $category, string $name)
+    {
+        $faqs = Faq::where('category', $name)->get();
+        foreach ($faqs as $faq) {
+            $category->faqs()->save($faq);
+        }
     }
 }

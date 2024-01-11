@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('content');
-        });
-        Schema::table('contact_forms', function (Blueprint $table) {
             $table->foreignId('username')->constrained('users')->onDelete('cascade');
         });
+
     }
 
     /**

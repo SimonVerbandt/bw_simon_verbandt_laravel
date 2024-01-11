@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('content');
-        });
-        Schema::table('contact_form_responses', function (Blueprint $table) {
             $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('username')->constrained('users')->onDelete('cascade');
         });
