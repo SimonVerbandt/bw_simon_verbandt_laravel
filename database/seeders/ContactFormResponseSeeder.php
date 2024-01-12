@@ -20,12 +20,14 @@ class ContactFormResponseSeeder extends Seeder
         $form1 = ContactForm::find(1);
         $form2 = ContactForm::find(2);
         ContactFormResponse::create([
+            'subject' => 'Reply to Test message',
             'content' => 'This is a test message',
             'admin_id' => $user1->id,
             'contact_form_id' => $form1->id,
         ]);
 
         ContactFormResponse::create([
+            'subject' => 'Reply to Test message 2',
             'content' => 'This is a test message 2',
             'admin_id' => $user2->id,
             'contact_form_id' => $form2->id,

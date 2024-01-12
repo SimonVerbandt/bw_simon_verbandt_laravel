@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('contact_forms', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('content');
+            $table->string('subject');
+            $table->text('content');
             $table->foreignId('author_id')->constrained('users');
         });
 

@@ -17,11 +17,13 @@ class ContactFormSeeder extends Seeder
         $user1 = User::find(1);
         $user2 = User::find(2);
         ContactForm::create([
+            'subject' => 'Test message',
             'content' => 'This is a test message',
             'author_id' => $user1->id,
         ]);
 
         ContactForm::create([
+            'subject' => 'Test message 2',
             'content' => 'This is a test message 2',
             'author_id' => $user2->id,
         ]);

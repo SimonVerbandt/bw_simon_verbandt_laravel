@@ -13,12 +13,18 @@ class Faq extends Model
         'answer',
         'slug',
         'category_id',
+        'admin_id',
 
     ];
 
     public function category()
     {
-        return $this->belongsTo(FaqCategory::class, 'category_id');
+        return $this->belongsTo(FaqCategory::class, 'category_id', 'id');
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'admin_id', 'id');
     }
 
 }
