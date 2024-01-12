@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('question');
             $table->text('answer');
             $table->foreignId('category_id');
+            $table->string('slug')->unique();
         });
 
     }
