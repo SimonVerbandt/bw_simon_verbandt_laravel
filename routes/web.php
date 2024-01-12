@@ -37,15 +37,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware(UserIsAdmin::class)->group(function () {
     Route::controller(FaqController::class)->group(function(){
         Route::post('/faq',  'create')->name('faq.create');
-        Route::patch('/faq', 'edit')->name('faq.edit');
-        Route::delete('/faq',  'destroy')->name('faq.destroy');
+        Route::post('/faq/{slug}', 'edit')->name('faq.edit');
+        Route::delete('/faq/{slug}',  'destroy')->name('faq.destroy');
         Route::post('/faq/category', 'createCategory')->name('faq.category.create');
-        Route::patch('/faq/category', 'editCategory')->name('faq.category.edit');
-        Route::delete('/faq/category', 'destroyCategory')->name('faq.category.destroy');
+        Route::post('/faq/category/{slug}', 'editCategory')->name('faq.category.edit');
+        Route::delete('/faq/category/{slug}', 'destroyCategory')->name('faq.category.destroy');
     });
     Route::controller(NewsItemController::class)->group(function(){
         Route::post('/news',  'create')->name('news.create');
-        Route::patch('/news', 'edit')->name('news.edit');
+        Route::post('/news/{slug}', 'edit')->name('news.edit');
         Route::delete('/news',  'destroy')->name('news.destroy');
     });
 });
