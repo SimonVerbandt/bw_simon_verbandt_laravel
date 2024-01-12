@@ -24,6 +24,7 @@ class FaqSeeder extends Seeder
             'category_id' => $category1->id,
             'slug' => '1',
             'admin_id' => $admin->id,
+            'category_name' => 'General',
         ]);
 
         Faq::create([
@@ -32,6 +33,7 @@ class FaqSeeder extends Seeder
             'category_id' => $category2->id,
             'slug'=> '2',
             'admin_id' => $admin->id,
+            'category_name' => 'Account Information',
         ]);
 
         Faq::create([
@@ -40,6 +42,7 @@ class FaqSeeder extends Seeder
             'category_id' => $category2->id,
             'slug'=> '3',
             'admin_id' => $admin->id,
+            'category_name' => 'Account Information',
         ]);
 
         Faq::create([
@@ -48,6 +51,7 @@ class FaqSeeder extends Seeder
             'category_id' => $category2->id,
             'slug'=> '4',
             'admin_id' => $admin->id,
+            'category_name' => 'Account Information',
         ]);
 
         Faq::create([
@@ -56,6 +60,7 @@ class FaqSeeder extends Seeder
             'category_id' => $category1->id,
             'slug'=> '5',
             'admin_id' => $admin->id,
+            'category_name' => 'General',
         ]);
     }
 }

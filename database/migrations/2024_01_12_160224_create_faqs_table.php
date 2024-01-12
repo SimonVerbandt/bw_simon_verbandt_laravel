@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->foreignId('admin_id')->constrained('users');
             $table->foreignId('category_id')->constrained('faq_categories')->onDelete('cascade');
+            $table->string('category_name')->references('name')->on('faq_categories')->onDelete('cascade');
         });
 
     }

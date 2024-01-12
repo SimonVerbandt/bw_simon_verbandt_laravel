@@ -14,13 +14,15 @@ class Faq extends Model
         'slug',
         'category_id',
         'admin_id',
-
+        'category_name',
     ];
 
     public function category()
     {
-        return $this->belongsTo(FaqCategory::class, 'category_id', 'id');
+        return [$this->belongsTo(FaqCategory::class, 'category_id', 'id'), $this->belongsTo(FaqCategory::class, 'category_name', 'name')];
     }
+
+
 
     public function admin()
     {
