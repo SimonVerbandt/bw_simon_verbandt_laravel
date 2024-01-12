@@ -42,7 +42,7 @@ class FaqController extends Controller
         }
     }
 
-    public function edit(Request $request, string $slug)
+    public function edit(Request $request, $slug)
     {
         $user = Auth::user();
         if (!$user) {
@@ -64,7 +64,7 @@ class FaqController extends Controller
         }
     }
 
-    public function destroy(Request $request, string $slug)
+    public function destroy(Request $request, $slug)
     {
         $user = Auth::user();
         if (!$user) {

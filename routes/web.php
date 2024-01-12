@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\ContactFormController;
+use App\Http\Controllers\ContactFormResponseController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\ProfileController;
@@ -35,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(UserIsAdmin::class)->group(function () {
-    Route::controller(FaqController::class)->group(function(){
+    Route::controller(FaqController::class)->group(function () {
         Route::post('/faq',  'create')->name('faq.create');
         Route::post('/faq/{slug}', 'edit')->name('faq.edit');
         Route::delete('/faq/{slug}',  'destroy')->name('faq.destroy');
@@ -43,23 +44,37 @@ Route::middleware(UserIsAdmin::class)->group(function () {
         Route::post('/faq/category/{slug}', 'editCategory')->name('faq.category.edit');
         Route::delete('/faq/category/{slug}', 'destroyCategory')->name('faq.category.destroy');
     });
-    Route::controller(NewsItemController::class)->group(function(){
+    Route::controller(NewsItemController::class)->group(function () {
         Route::post('/news',  'create')->name('news.create');
         Route::post('/news/{slug}', 'edit')->name('news.edit');
-        Route::delete('/news',  'destroy')->name('news.destroy');
+        Route::delete('/news/{slug}',  'destroy')->name('news.destroy');
     });
+    Route::controller(ContactFormResponseController::class)->group(function(){
+        Route::post('/contact-form-response/{contact-form-id}', 'create')->name('contact-form-response.create');
+        Route::post('/contact-form-response/{contact-form-id}/{slug}', 'edit')->name('contact-form-response.edit');
+        Route::delete('/contact-form-response/{contact-form-id}/{slug}', 'destroy')->name('contact-form-response.destroy');
+    });
+    Route::get('/admin', function () {
+        return view('admin');
+    })->name('admin');
 });
 
-Route::controller(FaqController::class)->group(function(){
-    Route::get('/faq',  'index')->name('faq.index');
-    Route::get('/faq/{slug}', 'showCategory' )->name('faq.category.show');
+Route::controller(FaqController::class)->group(function () {
+    Route::get('/faq', 'index')->name('faq.index');
+    Route::get('/faq/{slug}', 'showCategory')->name('faq.category.show');
 });
 
-Route::controller(NewsItemController::class)->group(function(){
+Route::controller(NewsItemController::class)->group(function () {
     Route::get('/news',  'index')->name('news.index');
-    Route::get('/news/{slug}', 'show' )->name('news.show');
+    Route::get('/news/{slug}', 'show')->name('news.show');
+});
+
+Route::controller(ContactFormController::class)->group(function(){
+    Route::get('/contact-form', 'index')->name('contact-form.index');
+    Route::post('/contact-form', 'create')->name('contact-form.show');
 });
 
 
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

@@ -16,7 +16,7 @@ class FaqSeeder extends Seeder
     {
         $category1 = FaqCategory::where('name', 'General')->first();
         $category2 = FaqCategory::where('name', 'Account Information')->first();
-        $faq1 = Faq::create([
+        Faq::create([
             'question' => 'Why use The Aviation Times?',
             'answer' => 'The Aviation Times is a news website that provides the latest aviation news. We have created this website for the aviation fanatics out there. We hope you enjoy our website!',
             'category_id' => $category1->id,
