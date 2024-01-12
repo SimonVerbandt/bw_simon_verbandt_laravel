@@ -21,10 +21,6 @@ class FaqController extends Controller
 
     public function create(Request $request): RedirectResponse
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
         $validated = $request->validate([
             'question' => 'required|text',
             'answer' => 'required|text',
@@ -44,10 +40,6 @@ class FaqController extends Controller
 
     public function edit(Request $request, $slug)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
         $validated = $request->validate([
             'question' => 'required|text',
             'answer' => 'required|text',
@@ -66,10 +58,6 @@ class FaqController extends Controller
 
     public function destroy(Request $request, $slug)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
         $validated = $request->validate([
             'question' => 'required|text',
             'answer' => 'required|text',
@@ -96,10 +84,6 @@ class FaqController extends Controller
 
     public function createCategory(Request $request)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -114,10 +98,6 @@ class FaqController extends Controller
 
     public function editCategory(Request $request, string $slug)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -136,10 +116,6 @@ class FaqController extends Controller
 
     public function destroyCategory(Request $request, string $slug)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login');
-        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
