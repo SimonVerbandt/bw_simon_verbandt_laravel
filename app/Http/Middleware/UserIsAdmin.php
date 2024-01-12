@@ -6,16 +6,15 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 class UserIsAdmin
 {
 
     public function isAdmin(User $user): bool
     {
-        $isAdmin = DB::table('users')->where('id', $user->id)->value('isAdmin', true);
-        return $isAdmin;
+        return $user->isAdmin;
     }
     /**
      * Handle an incoming request.
@@ -27,12 +26,12 @@ class UserIsAdmin
 
         $user = Auth::user();
         if (!$user) {
-            return redirect()->route('login');
+            return Redirect::route('login');
         }
 
         $admin = $this->isAdmin($user);
         if (!$admin) {
-            return redirect()->route('dashboard');
+            return Redirect::route('dashboard');
         }
         return $next($request);
     }
