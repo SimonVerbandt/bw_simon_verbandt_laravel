@@ -75,21 +75,14 @@ class FaqController extends Controller
         return redirect()->route('faq.index');
     }
 
-    public function showCategory($category)
+    public function showCategory(string $slug)
     {
-        $categoryModel = FaqCategory::where('name', $category)->first();
-
-        if (!$categoryModel) {
-            return redirect()->route('faq.index')->withErrors(['error' => 'Category not found']);
-        }
-
-        $faqs = $categoryModel-> faqs;
-        dd($faqs);
-
+        $category = FaqCategory::where('slug', $slug)->first();
+        $faqs = $category->faqs;
         return view('faq.category.show', [
-            'category' => $categoryModel->name,
+            'slug' => $slug,
             'faqs' => $faqs,
-        ]); //TODO: Fix this shit
+        ]);
     }
 
 

@@ -34,16 +34,18 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(UserIsAdmin::class)->group(function () {
-    Route::post('/faq/create', [FaqController::class, 'create'])->name('faq.create');
-    Route::post('/faq/edit', [FaqController::class, 'edit'])->name('faq.edit');
-    Route::delete('/faq/delete', [FaqController::class, 'destroy'])->name('faq.destroy');
-    Route::post('/faq/category/create', [FaqController::class, 'createCategory'])->name('faq.category.create');
-    Route::post('/faq/category/edit', [FaqController::class, 'editCategory'])->name('faq.category.edit');
-    Route::delete('/faq/category/delete', [FaqController::class, 'destroyCategory'])->name('faq.category.destroy');
+    Route::controller(FaqController::class)->group(function(){
+        Route::post('/faq',  'create')->name('faq.create');
+        Route::patch('/faq', 'edit')->name('faq.edit');
+        Route::delete('/faq',  'destroy')->name('faq.destroy');
+        Route::post('/faq/category', 'createCategory')->name('faq.category.create');
+        Route::patch('/faq/category', 'editCategory')->name('faq.category.edit');
+        Route::delete('/faq/category', 'destroyCategory')->name('faq.category.destroy');
+    });
 });
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-Route::get('/faq/{category}', [FaqController::class, 'showCategory'])->name('faq.category.show');
+Route::get('/faq/{slug}', [FaqController::class, 'showCategory' ])->name('faq.category.show');
 //TODO: Fix the route and controller method for showing a single FAQ category
 
 

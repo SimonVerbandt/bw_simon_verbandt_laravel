@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->text('question');
             $table->text('answer');
-            $table->string('category')->foreign('category')->references('id')->on('faq_categories');
+            $table->foreignId('category_id');
         });
 
     }

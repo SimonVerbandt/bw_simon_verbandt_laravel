@@ -14,25 +14,16 @@ class FaqCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $general = FaqCategory::create([
+        FaqCategory::create([
             'name' => 'General',
+            'slug' => 'general',
 
         ]);
 
-        $account = FaqCategory::create([
+        FaqCategory::create([
             'name' => 'Account Information',
+            'slug' => 'account-information',
         ]);
 
-        $this->getFaqs($general, 'General');
-        $this->getFaqs($account, 'Account Information');
-
-    }
-
-    private function getFaqs(FaqCategory $category, string $name)
-    {
-        $faqs = Faq::where('category', $name)->get();
-        foreach ($faqs as $faq) {
-            $category->faqs()->save($faq);
-        }
     }
 }

@@ -12,12 +12,11 @@ class FaqCategory extends Model
         'id',
         'name',
         'slug',
-        'faqs'
 
     ];
 
     public function faqs(){
-        return $this->hasMany(Faq::class, 'id');
+        return $this->hasMany(Faq::class, 'category_id');
     }
 
 
