@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class FaqCategory extends Model
 {
     use HasFactory;
-
-    protected $table = 'admins';
     protected $fillable = [
         'id',
-        'user_id',
         'name',
-        'email',
+        'slug',
+
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+    public function faqs(){
+        return $this->hasMany(Faq::class, 'category_id');
     }
+
+
+
 }

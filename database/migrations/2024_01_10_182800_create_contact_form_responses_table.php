@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('contact_form_responses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('username');
-            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('contact_form_id')->references('id')->on('contact_forms')->onDelete('cascade');
             $table->string('content');
+            $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('username')->constrained('users')->onDelete('cascade');
         });
     }
 

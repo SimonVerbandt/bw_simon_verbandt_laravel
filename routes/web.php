@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\UserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,20 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::middleware(UserIsAdmin::class)->group(function () {
+    Route::controller(FaqController::class)->group(function(){
+        Route::post('/faq',  'create')->name('faq.create');
+        Route::patch('/faq', 'edit')->name('faq.edit');
+        Route::delete('/faq',  'destroy')->name('faq.destroy');
+        Route::post('/faq/category', 'createCategory')->name('faq.category.create');
+        Route::patch('/faq/category', 'editCategory')->name('faq.category.edit');
+        Route::delete('/faq/category', 'destroyCategory')->name('faq.category.destroy');
+    });
+});
+
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+Route::get('/faq/{slug}', [FaqController::class, 'showCategory' ])->name('faq.category.show');
+//TODO: Fix the route and controller method for showing a single FAQ category
 
 
 require __DIR__.'/auth.php';

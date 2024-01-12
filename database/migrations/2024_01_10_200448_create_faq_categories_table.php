@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('faq_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('users')->onDelete('cascade');
+            $table->timestamps();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
         });
     }
 
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('faq_categories');
     }
 };

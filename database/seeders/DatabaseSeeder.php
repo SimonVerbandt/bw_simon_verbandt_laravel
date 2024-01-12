@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             AirlineSeeder::class,
             UserSeeder::class,
+            FaqCategorySeeder::class,
+            FaqSeeder::class,
         ]);
 
     }
