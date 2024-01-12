@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('subject');
             $table->text('content');
             $table->foreignId('admin_id')->constrained('admins');
-            $table->foreignId('contact_form_id')->constrained('contact_forms');
+            $table->foreignId('contact_form_id')->constrained('contact_forms')->onDelete('cascade');
         });
     }
 
