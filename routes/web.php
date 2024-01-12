@@ -39,19 +39,23 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(UserIsAdmin::class)->group(function () {
     Route::controller(FaqController::class)->group(function () {
-        Route::post('/faq',  'create')->name('faq.create');
-        Route::post('/faq/{slug}', 'edit')->name('faq.edit');
-        Route::delete('/faq/{slug}',  'destroy')->name('faq.destroy');
-        Route::post('/faq/category', 'createCategory')->name('faq.category.create');
-        Route::post('/faq/category/{slug}', 'editCategory')->name('faq.category.edit');
-        Route::delete('/faq/category/{slug}', 'destroyCategory')->name('faq.category.destroy');
+        Route::get('/admin/faq', 'showAdminFaq')->name('admin.faq.index');
+        Route::post('/admin/faq/new', 'create')->name('faq.create');
+        Route::post('/admin/faq/{slug}/edit', 'edit')->name('faq.edit');
+        Route::delete('/admin/faq/{slug}',  'destroy')->name('faq.destroy');
+        Route::get('/admin/faq/category', 'showAdminCategory')->name('admin.faq.category');
+        Route::post('/admin/faq/category/new', 'createCategory')->name('faq.category.create');
+        Route::post('/admin/faq/category/{slug}/edit', 'editCategory')->name('faq.category.edit');
+        Route::delete('/admin/faq/category/{slug}', 'destroyCategory')->name('faq.category.destroy');
     });
     Route::controller(NewsItemController::class)->group(function () {
-        Route::post('/news',  'create')->name('news.create');
-        Route::post('/news/{slug}', 'edit')->name('news.edit');
-        Route::delete('/news/{slug}',  'destroy')->name('news.destroy');
+        Route::get('/admin/news', 'showAdminNews')->name('admin.news');
+        Route::post('/admin/news/new',  'create')->name('news.create');
+        Route::post('/admin/news/{slug}', 'edit')->name('news.edit');
+        Route::delete('/admin/news/{slug}',  'destroy')->name('news.destroy');
     });
     Route::controller(ContactFormResponseController::class)->group(function(){
+        Route::get('/contact-forms', 'showAdminContactForms')->name('admin.contact-forms');
         Route::post('/contact-form-response/{contact-form-id}', 'create')->name('contact-form-response.create');
         Route::post('/contact-form-response/{contact-form-id}/{slug}', 'edit')->name('contact-form-response.edit');
         Route::delete('/contact-form-response/{contact-form-id}/{slug}', 'destroy')->name('contact-form-response.destroy');
@@ -84,7 +88,7 @@ Route::get('/about', function(){
     return view('about');
 })->name('about');
 
-
+//TODO: Admin routes finishing up, make corresponding views
 
 
 require __DIR__ . '/auth.php';

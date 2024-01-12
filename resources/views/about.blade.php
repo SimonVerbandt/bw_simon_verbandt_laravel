@@ -10,15 +10,14 @@
 
 
     <h1>About</h1>
-    <p>Find the sources used for creating this project:</p>
+    <p>Here are all the sources used while developing this project:</p>
     <ul>
-        <li><a href="https://laravel.com/docs/8.x">Laravel 8.x</a></li>
-        <li><a href="https://laravel-livewire.com/docs/2.x/quickstart">Livewire 2.x</a></li>
         <li><a href="https://tailwindcss.com/docs">Tailwind CSS</a></li>
-        <li><a href="https://vitejs.dev/guide/">Vite</a></li>
         <li><a href="chat.openai.com">OpenAI ChatGPT</a></li>
         <li><a href="https://www.bunny.net/">Bunny CDN</a></li>
         <li><a href="https://favicon.io/favicon-converter/">Favicon.io</a></li>
+        <li><a href="https://www.flaticon.com/free-icons/airplane">Flaticon</a></li>
+        <li><a href="https://docs.github.com/en/copilot/using-github-copilot/getting-started-with-github-copilot">GitHub CoPilot</a></li>
     </ul>
 </div>
 </div>
