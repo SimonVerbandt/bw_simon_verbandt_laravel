@@ -19,6 +19,6 @@ class NewsItem extends Model
 
     public function author()
     {
-        return $this->hasOne(User::class, 'id', 'author_id');
+        return $this->hasOne(Admin::class, 'id', 'author_id');
     }
 }
