@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Faq;
 use App\Models\FaqCategory;
-use App\Models\User;
+use App\Models\Admin;
 
 class FaqSeeder extends Seeder
 {
@@ -17,7 +17,7 @@ class FaqSeeder extends Seeder
     {
         $category1 = FaqCategory::where('name', 'General')->first();
         $category2 = FaqCategory::where('name', 'Account Information')->first();
-        $admin = User::find(1);
+        $admin = Admin::find(1);
         Faq::create([
             'question' => 'Why use The Aviation Times?',
             'answer' => 'The Aviation Times is a news website that provides the latest aviation news. We have created this website for the aviation fanatics out there. We hope you enjoy our website!',

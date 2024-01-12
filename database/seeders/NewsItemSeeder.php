@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\NewsItem;
@@ -21,6 +22,6 @@ class NewsItemSeeder extends Seeder
             'published_at' => '2021-01-01',
             'author_id' => 1,
             'slug' => 1,
-        ])->author()->save(User::find(1));
+        ])->author()->save(Admin::find(1));
     }
 }

@@ -14,8 +14,8 @@ class ContactFormSeeder extends Seeder
      */
     public function run(): void
     {
-        $user1 = User::find(1);
-        $user2 = User::find(2);
+        $user1 = User::find(2);
+        $user2 = User::find(3);
         ContactForm::create([
             'subject' => 'Test message',
             'content' => 'This is a test message',

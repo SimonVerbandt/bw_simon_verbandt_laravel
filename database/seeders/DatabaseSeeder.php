@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             // ArticleSeeder::class,
             // AirlineSeeder::class,
             UserSeeder::class,
+            AdminSeeder::class,
             FaqCategorySeeder::class,
             FaqSeeder::class,
             NewsItemSeeder::class,
