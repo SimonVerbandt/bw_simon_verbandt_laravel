@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactFormResponseController;
 use App\Http\Controllers\FaqController;
@@ -72,6 +74,15 @@ Route::controller(ContactFormController::class)->group(function(){
     Route::get('/contact-form', 'show')->name('contact-form.show');
     Route::post('/contact-form', 'submit')->name('contact-form.submit');
 });
+
+Route::controller(AirlineController::class)->group(function(){
+    Route::get('/airline', 'index')->name('airline.index');
+    Route::get('/airline/{slug}', 'show')->name('airline.show');
+});
+
+Route::get('/about', function(){
+    return view('about');
+})->name('about');
 
 
 

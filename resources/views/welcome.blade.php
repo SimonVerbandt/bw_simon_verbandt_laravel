@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>The Aviation Times</title>
+    <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -853,8 +854,8 @@
         @endif
         <div class="ml-8">
             <h1 class="font-bold dark:text-gray-400">The Aviation Times</h1>
-            <p>Welcome! Here you will find the latest news on the aviation industry. Login or sign up to get more
-                features!</p>
+            <h3>Welcome! Here you will find the latest news on the aviation industry. Login or sign up to get more
+                features!</h3>
             </header>
             <div class="sm:flex sm:flex-col sm:justify-center sm:align-top">
                 <ol>
