@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\UserIsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -42,11 +43,23 @@ Route::middleware(UserIsAdmin::class)->group(function () {
         Route::patch('/faq/category', 'editCategory')->name('faq.category.edit');
         Route::delete('/faq/category', 'destroyCategory')->name('faq.category.destroy');
     });
+    Route::controller(NewsItemController::class)->group(function(){
+        Route::post('/news',  'create')->name('news.create');
+        Route::patch('/news', 'edit')->name('news.edit');
+        Route::delete('/news',  'destroy')->name('news.destroy');
+    });
 });
 
-Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-Route::get('/faq/{slug}', [FaqController::class, 'showCategory' ])->name('faq.category.show');
-//TODO: Fix the route and controller method for showing a single FAQ category
+Route::controller(FaqController::class)->group(function(){
+    Route::get('/faq',  'index')->name('faq.index');
+    Route::get('/faq/{slug}', 'showCategory' )->name('faq.category.show');
+});
+
+Route::controller(NewsItemController::class)->group(function(){
+    Route::get('/news',  'index')->name('news.index');
+    Route::get('/news/{slug}', 'show' )->name('news.show');
+});
+
 
 
 require __DIR__.'/auth.php';
