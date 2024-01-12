@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class ContactForm extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'subject',
+        'content',
+        'author_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
 }

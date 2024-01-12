@@ -65,13 +65,12 @@ Route::controller(FaqController::class)->group(function () {
 });
 
 Route::controller(NewsItemController::class)->group(function () {
-    Route::get('/news',  'index')->name('news.index');
-    Route::get('/news/{slug}', 'show')->name('news.show');
+    Route::get('/news', 'index')->name('news.index');
 });
 
 Route::controller(ContactFormController::class)->group(function(){
-    Route::get('/contact-form', 'index')->name('contact-form.index');
-    Route::post('/contact-form', 'create')->name('contact-form.show');
+    Route::get('/contact-form', 'show')->name('contact-form.show');
+    Route::post('/contact-form', 'submit')->name('contact-form.submit');
 });
 
 

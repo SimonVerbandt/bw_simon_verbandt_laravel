@@ -12,11 +12,16 @@ class FaqCategory extends Model
         'id',
         'name',
         'slug',
+        'admin_id',
 
     ];
 
     public function faqs(){
-        return $this->hasMany(Faq::class, 'category_id');
+        return $this->hasMany(Faq::class, 'category_id', 'id');
+    }
+
+    public function admin(){
+        return $this->belongsTo(User::class, 'admin_id', 'id');
     }
 
 

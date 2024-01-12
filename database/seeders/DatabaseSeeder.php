@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\ContactForm;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +21,8 @@ class DatabaseSeeder extends Seeder
             FaqCategorySeeder::class,
             FaqSeeder::class,
             NewsItemSeeder::class,
+            ContactFormSeeder::class,
+            ContactFormResponseSeeder::class,
         ]);
 
     }

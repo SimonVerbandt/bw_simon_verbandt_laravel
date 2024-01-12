@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('contact_form_responses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('content');
-            $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('username')->constrained('users')->onDelete('cascade');
+            $table->string('subject');
+            $table->text('content');
+            $table->foreignId('admin_id')->constrained('users');
+            $table->foreignId('contact_form_id')->constrained('contact_forms');
         });
     }
 

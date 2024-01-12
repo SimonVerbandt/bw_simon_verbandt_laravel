@@ -16,8 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->text('question');
             $table->text('answer');
-            $table->foreignId('category_id');
             $table->string('slug')->unique();
+            $table->foreignId('admin_id')->constrained('users');
+            $table->foreignId('category_id')->constrained('faq_categories')->onDelete('cascade');
         });
 
     }
