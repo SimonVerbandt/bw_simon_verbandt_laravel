@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('content');
-            $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('username')->constrained('users')->onDelete('cascade');
+            $table->foreignId('admin_id')->constrained('users');
+            $table->foreignId('contact_form_id')->constrained('contact_forms');
         });
     }
 

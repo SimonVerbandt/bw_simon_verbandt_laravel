@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('image');
             $table->text('content');
             $table->date('published_at');
-            $table->foreignId('author_id');
+            $table->foreignId('author_id')->constrained('users');
             $table->integer('slug');
         });
 

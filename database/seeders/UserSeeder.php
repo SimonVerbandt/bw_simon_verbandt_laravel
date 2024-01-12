@@ -20,5 +20,22 @@ class UserSeeder extends Seeder
             'birthday' => '1999-01-01',
             'isAdmin' => true,
         ]);
+
+        User::create([
+            'name' => 'simon',
+            'email' => 'simon.verbandt@student.ehb.be',
+            'password' => bcrypt('Paswoord!321'),
+            'birthday' => '1999-01-01',
+            'isAdmin' => false,
+        ]);
+
+        User::create([
+            'name' => 'prof',
+            'email' => 'prof@ehb.be',
+            'password' => bcrypt('Prof!123'),
+            'birthday' => '1999-01-01',
+            'isAdmin' => false,
+        ]);
     }
+
 }

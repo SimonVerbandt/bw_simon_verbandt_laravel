@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->foreignId('admin_id')->constrained('users');
         });
     }
 
