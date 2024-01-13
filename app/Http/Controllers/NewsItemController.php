@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewsItemRequest;
 use Illuminate\Http\Request;
 use App\Models\NewsItem;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class NewsItemController extends Controller
 {
-    //CRUD operations for news items
+    //Visitor routes
     public function index()
     {
         return view('news.index', [
@@ -17,86 +19,64 @@ class NewsItemController extends Controller
         ]);
     }
 
-    public function show($slug)
+    //Admin routes
+    public function showAdminNews()
     {
-        return view('news.show', [
-            'newsitem' => NewsItem::where('slug', $slug)->firstOrFail(),
+        return view('admin.news.show', [
+            'newsItems' => NewsItem::all(),
         ]);
     }
 
-    public function create(Request $request): RedirectResponse
+    public function create(): View
     {
-        $user = Auth::user();
-        if(!$user){
-            return redirect()->route('login');
-        }
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'required|text',
-            'content' => 'required|text',
-            'published_at' => 'required|date',
+        return view('admin.news.create');
+    }
+
+    public function store(NewsItemRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+        $newsItem = NewsItem::create($validated);
+        $newsItem->fill($validated);
+        $newsItem->slug = Str::slug($validated['title']);
+        $newsItem->published_at = now();
+        $newsItem->image = $validated['image'] ?? null;
+        $newsItem->save();
+        return redirect()->route('admin.news')->with('success', 'News item created');
+    }
+
+
+    public function edit($slug): View
+    {
+        $newsItem = NewsItem::where('slug', $slug)->firstOrFail();
+        return view('admin.news.edit', [
+            'newsItem' => $newsItem,
+            'slug' => $slug,
+        ]);
+    }
+
+    public function update(NewsItemRequest $request, $slug): RedirectResponse
+    {
+        $validated = $request->validated();
+        $newsItem = NewsItem::where('slug', $slug)->firstOrFail();
+        $newsItem->update($validated);
+        return redirect()->route('admin.news')->with('success', 'News item updated');
+    }
+
+    public function destroy($slug)
+    {
+        $newsItem = NewsItem::where('slug', $slug)->firstOrFail();
+        $newsItem->delete();
+        return redirect()->route('admin.news')->with('success', 'News item deleted');
+    }
+
+    public function validateNews(Request $request)
+    {
+        return $request->validate([
+            'title' => 'required|string',
+            'image' => 'nullable|url',
+            'content' => 'required|string',
             'author_id' => 'required|integer',
+            'published_at' => 'nullable|date',
         ]);
-        if(!$validated['title'] || !$validated['image'] || !$validated['content'] || !$validated['published_at'] || !$validated['author_id']){
-            return redirect()->route('news.index')->withErrors(['error' => 'Title, image, content, published_at, and author_id are required']);
-        } else {
-            $newsItem = new NewsItem();
-            $newsItem->title = $validated['title'];
-            $newsItem->image = $validated['image'];
-            $newsItem->content = $validated['content'];
-            $newsItem->published_at = $validated['published_at'];
-            $newsItem->author_id = $validated['author_id'];
-            $newsItem->save();
-            return redirect()->route('news.index');
-        }
-      }
-
-    public function edit(Request $request, $slug)
-    {
-        $user = Auth::user();
-        if(!$user){
-            return redirect()->route('login');
-        }
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'required|text',
-            'content' => 'required|text',
-            'published_at' => 'required|date',
-            'author_id' => 'required|integer',
-            'slug' => 'required|integer',
-        ]);
-        if(!$validated['title'] || !$validated['image'] || !$validated['content'] || !$validated['published_at'] || !$validated['author_id'] || !$validated['slug']){
-            return redirect()->route('news.index')->withErrors(['error' => 'Title, image, content, published_at, and author_id are required']);
-        } else {
-            $newsItem = NewsItem::where('slug', $slug)->firstOrFail();
-            $newsItem->title = $validated['title'];
-            $newsItem->image = $validated['image'];
-            $newsItem->content = $validated['content'];
-            $newsItem->published_at = $validated['published_at'];
-            $newsItem->author_id = $validated['author_id'];
-            $newsItem->save();
-            return redirect()->route('news.show', ['slug' => $newsItem->slug]);
-        }
-
     }
-
-    public function destroy(Request $request, $slug)
-    {
-        $user = Auth::user();
-        if(!$user){
-            return redirect()->route('login');
-        }
-        $validated = $request->validate([
-           'slug' => 'required|integer',
-        ]);
-        if(!$validated['slug']){
-            return redirect()->route('news.index')->withErrors(['error' => 'Slug is required']);
-        }else{
-            $newsItem = NewsItem::where('slug', $slug)->firstOrFail();
-            $newsItem->delete();
-            return redirect()->route('news.index');
-        }
-    }
-
-
 }
