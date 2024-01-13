@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\FaqCategoryRequest;
+use App\Http\Requests\FaqRequest;
 use App\Models\Faq;
 use App\Models\FaqCategory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class FaqController extends Controller
 {
@@ -18,7 +20,7 @@ class FaqController extends Controller
         ]);
     }
 
-    public function showCategory(string $slug)
+    public function showCategory($slug)
     {
         $category = FaqCategory::where('slug', $slug)->first();
         $faqs = $category->faqs;
@@ -42,99 +44,86 @@ class FaqController extends Controller
             'categories' => FaqCategory::all(),
         ]);
     }
-    public function create(Request $request): RedirectResponse
+
+    //FAQ CRUD
+    public function create(): View
     {
-        $validated = $request->validate([
-            'question' => 'required|text',
-            'answer' => 'required|text',
-            'category_name' => 'required|string|max:255',
+        return view('admin.faq.create', [
+            'categories' => FaqCategory::all(),
         ]);
-        if (!$validated['question'] || !$validated['answer'] || !$validated['category_name']) {
-            return redirect()->route('faq.index')->withErrors(['error' => 'Question, answer, and category are required']);
-        } else {
-            $faq = new Faq();
-            $faq->question = $validated['question'];
-            $faq->answer = $validated['answer'];
-            $faq->faq_category = $validated['faq_category'];
-            $faq->save();
-            return redirect()->route('admin.faq.index');
-        }
     }
 
-    public function edit(Request $request, $slug)
+    public function store(FaqRequest $request)
     {
-        $faq = Faq::where('slug', $slug)->first();
-        if (!$faq) {
-            return redirect()->route('admin.faq.index')->withErrors(['error' => 'FAQ not found']);
-        };
-        $validated = $request->validate([
-            'question' => 'required|text',
-            'answer' => 'required|text',
-        ]);
-        if ($validated['question'] && $validated['answer']) {
-            $faq->question = $validated['question'];
-            $faq->answer = $validated['answer'];
-            $faq->save();
-            return redirect()->route('admin.faq.index');
-        }
+        $validated = $request->validated();
+        $faq = Faq::create($validated);
+        $faq->fill($validated);
+        $faq->slug = Str::slug($validated['question']);
+        $faq->save();
+        return redirect()->route('admin.faq')->with('success', 'FAQ created');
     }
 
-    public function destroy(Request $request, $slug)
+    public function edit($slug)
     {
-        $validated = $request->validate([
-            'question' => 'required|text',
-            'answer' => 'required|text',
+        return view('admin.faq.edit', [
+            'faq' => Faq::where('slug', $slug)->firstOrFail(),
+            'slug' => $slug,
         ]);
-        if (!$validated['question'] || !$validated['answer']) {
-            return redirect()->route('admin.faq.index')->withErrors(['error' => 'Question and answer are required']);
-        }
+    }
 
-        $faq = Faq::where('slug', $slug)->first();
+    public function update(FaqRequest $request, $slug): RedirectResponse
+    {
+        $validated = $request->validated();
+        $faq = Faq::where('slug', $slug)->firstOrFail();
+        $faq->update($validated);
+        return redirect()->route('admin.faq')->with('success', 'FAQ updated');
+    }
+
+    public function destroy($slug)
+    {
+        $faq = Faq::where('slug', $slug)->firstOrFail();
         $faq->delete();
-        return redirect()->route('admin.faq.index');
-    }
-    public function createCategory(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-        if (!$validated['name']) {
-            return redirect()->route('admin.faq.category.index')->withErrors(['error' => 'Category name is required']);
-        }
-        $category = new FaqCategory();
-        $category->name = $request->name;
-        $category->save();
-        return redirect()->route('admin.faq.category.index');
+        return redirect()->route('admin.faq')->with('success', 'FAQ deleted');
     }
 
-    public function editCategory(Request $request, string $slug)
+    //FAQ Category CRUD
+    public function createCategory(): View
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-        if (!$validated['name']) {
-            return redirect()->route('admin.faq.category.index')->withErrors(['error' => 'Category name is required']);
-        }
+        return view('admin.faq.category.create');
+    }
 
-        $category = FaqCategory::where('slug', $slug)->first();
-        if (!$category) {
-            return redirect()->route('admin.faq.category.index')->withErrors(['error' => 'Category not found']);
-        };
+    public function storeCategory(FaqCategoryRequest $request)
+    {
+        $validated = $request->validated();
+        $category = FaqCategory::create($validated);
         $category->name = $validated['name'];
+        $category->slug = Str::slug($validated['name']);
         $category->save();
-        return redirect()->route('admin.faq.category.index');
+        return redirect()->route('admin.faq.category')->with('success', 'Category created');
     }
 
-    public function destroyCategory(Request $request, string $slug)
+    public function editCategory($slug): View
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
+        return view('admin.faq.category.edit', [
+            'category' => FaqCategory::where('slug', $slug)->firstOrFail(),
+            'slug' => $slug,
         ]);
-        if (!$validated['name']) {
-            return redirect()->route('admin.faq.category.index')->withErrors(['error' => 'Category name is required']);
-        }
-        $category = FaqCategory::where('slug', $slug)->first();
-        $category->delete();
-        return redirect()->route('admin.faq.category.index');
     }
+
+    public function updateCategory(FaqCategoryRequest $request, $slug): RedirectResponse
+    {
+        $validated = $request->validated();
+        $category = FaqCategory::where('slug', $slug)->firstOrFail();
+        $category->update($validated);
+        return redirect()->route('admin.faq.category')->with('success', 'Category updated');
+    }
+
+    public function destroyCategory($slug)
+    {
+
+        $category = FaqCategory::where('slug', $slug)->firstOrFail();
+        $category->delete();
+        return redirect()->route('admin.faq.category')->with('success', 'Category deleted');
+    }
+
 }

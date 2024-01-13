@@ -4,9 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
-
-class NewsItemRequest extends FormRequest
+class ContactRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +22,8 @@ class NewsItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'image' => ['nullable', 'string', 'max:255'],
-            'content' => ['required', 'string'],
-            'published_at' => ['nullable', 'date'],
-            'author_id' => ['required', 'integer'],
-            'slug' => ['nullable', 'string', 'max:255'],
+            'subject' => 'required|string',
+            'content' => 'required|string',
         ];
     }
 }

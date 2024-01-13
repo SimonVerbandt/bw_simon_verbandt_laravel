@@ -11,8 +11,8 @@
                     <ul>
                         @foreach ($newsItems as $newsitem)
                             <li><x-newsitem :newsitem="$newsitem" /></li>
-                            <a href="{{ route('news.edit'), ['slug' => $newsitem->slug]}}">Edit</a>//TODO:fix logic for editing
-                            <x-primary-button href="{{ route('news.destroy'), ['slug' => $newsitem->slug] }}">Delete</x-primary-button>//TODO:fix logic for deletion
+                            <a href="{{ route('news.edit', ['slug' => $newsitem->slug])}}">Edit</a>//TODO:fix logic for editing
+                            <x-danger-button type="submit">Delete</x-primary-button>//TODO:fix logic for deletion
                         @endforeach
                     </ul>
                 </div>

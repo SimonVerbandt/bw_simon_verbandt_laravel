@@ -44,11 +44,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'isAdmin' => 'boolean',
     ];
 
     public function isAdmin(): bool
     {
         return $this->isAdmin;
+    }
+
+    public function admin(){
+        return $this->hasOne(Admin::class, 'user_id', 'id');
     }
         /**
      * Get the contact forms for the user.

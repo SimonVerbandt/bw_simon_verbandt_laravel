@@ -1,11 +1,14 @@
 <x-app-admin>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Management Panel') }}
+            {{ __('Admin Panel') }}
         </h2>
     </x-slot>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-start space-between">
+        <div class="title">
+            <h1 class="">Choose your operation: </h1>
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-start space-between" >
             <ul>
 
                 <li><a href="{{ route('admin.contact-forms') }}"
@@ -32,3 +35,4 @@
         </div>
     </div>
 </x-app-admin>
+

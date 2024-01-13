@@ -27,8 +27,7 @@
             @endif
 
             <!-- Page Content -->
-            <main style="background: rgb(255,255,255);
-            background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,159,255,1) 100%);">
+            <main>
                {{$slot}}
             </main>
         </div>
