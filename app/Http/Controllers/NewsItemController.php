@@ -68,15 +68,4 @@ class NewsItemController extends Controller
         $newsItem->delete();
         return redirect()->route('admin.news')->with('success', 'News item deleted');
     }
-
-    public function validateNews(Request $request)
-    {
-        return $request->validate([
-            'title' => 'required|string',
-            'image' => 'nullable|url',
-            'content' => 'required|string',
-            'author_id' => 'required|integer',
-            'published_at' => 'nullable|date',
-        ]);
-    }
 }
