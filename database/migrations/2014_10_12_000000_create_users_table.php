@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->text('avatar')->nullable();
             $table->boolean('isAdmin')->default(false);
+            $table->text('about_me')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

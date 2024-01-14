@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('Paswoord!321'),
             'birthday' => '1999-01-01',
             'isAdmin' => true,
+            'about_me' => 'I am the admin of this website.'
         ]);
 
         User::create([
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('Paswoord!321'),
             'birthday' => '1999-01-01',
             'isAdmin' => false,
+            'about_me' => 'I am a student at EHB.'
         ]);
 
         User::create([
