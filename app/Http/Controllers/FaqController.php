@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FaqCategoryRequest;
-use App\Http\Requests\FaqRequest;
+use Illuminate\Http\Request;
 use App\Models\Faq;
 use App\Models\FaqCategory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class FaqController extends Controller
@@ -17,6 +17,7 @@ class FaqController extends Controller
     {
         return view('faq.index', [
             'faqs' => Faq::all(),
+            'categories' => FaqCategory::all(),
         ]);
     }
 
@@ -27,6 +28,7 @@ class FaqController extends Controller
         return view('faq.category.show', [
             'slug' => $slug,
             'faqs' => $faqs,
+            'categories' => FaqCategory::all(),
         ]);
     }
 
@@ -36,44 +38,52 @@ class FaqController extends Controller
     {
         return view('admin.faq.index', [
             'faqs' => Faq::all(),
-        ]);
-    }
-    public function showAdminCategory()
-    {
-        return view('admin.faq.category.index', [
             'categories' => FaqCategory::all(),
         ]);
     }
 
-    //FAQ CRUD
     public function create(): View
     {
         return view('admin.faq.create', [
             'categories' => FaqCategory::all(),
         ]);
     }
-
-    public function store(FaqRequest $request)
+    public function validateFaq(Request $request)
     {
-        $validated = $request->validated();
-        $faq = Faq::create($validated);
-        $faq->fill($validated);
-        $faq->slug = Str::slug($validated['question']);
+        return $request->validate([
+            'question' => 'required|string',
+            'answer' => 'required|string',
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $this->validateFaq($request);
+        $faq = Faq::create([
+            'question' => $validated['question'],
+            'answer' => $validated['answer'],
+            'category_id' => $request->input('category'),
+            'slug' => Str::slug($validated['question']),
+            'category_name' => FaqCategory::where('id', $request->input('category'))->first()->name,
+            'admin_id' => Auth::id(),
+        ]);
         $faq->save();
         return redirect()->route('admin.faq')->with('success', 'FAQ created');
     }
+
 
     public function edit($slug)
     {
         return view('admin.faq.edit', [
             'faq' => Faq::where('slug', $slug)->firstOrFail(),
+            'categories' => FaqCategory::all(),
             'slug' => $slug,
         ]);
     }
 
-    public function update(FaqRequest $request, $slug): RedirectResponse
+    public function update(Request $request, $slug): RedirectResponse //TODO:fix this
     {
-        $validated = $request->validated();
+        $validated = $this->validateFaq($request);
         $faq = Faq::where('slug', $slug)->firstOrFail();
         $faq->update($validated);
         return redirect()->route('admin.faq')->with('success', 'FAQ updated');
@@ -87,43 +97,51 @@ class FaqController extends Controller
     }
 
     //FAQ Category CRUD
-    public function createCategory(): View
+
+    public function validateCategory(Request $request)
     {
-        return view('admin.faq.category.create');
+        return $request->validate([
+            'name' => 'required|string',
+        ]);
     }
 
-    public function storeCategory(FaqCategoryRequest $request)
+    public function createCategory(): View
     {
-        $validated = $request->validated();
-        $category = FaqCategory::create($validated);
-        $category->name = $validated['name'];
-        $category->slug = Str::slug($validated['name']);
+        return view('admin.faq.createCategory');
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $validated = $this->validateCategory($request);
+        $category = FaqCategory::create([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+            'admin_id' => Auth::id(),
+        ]);
         $category->save();
-        return redirect()->route('admin.faq.category')->with('success', 'Category created');
+        return redirect()->route('admin.faq')->with('success', 'Category created');
     }
 
     public function editCategory($slug): View
     {
-        return view('admin.faq.category.edit', [
+        return view('admin.faq.editCategory', [
             'category' => FaqCategory::where('slug', $slug)->firstOrFail(),
             'slug' => $slug,
         ]);
     }
 
-    public function updateCategory(FaqCategoryRequest $request, $slug): RedirectResponse
+    public function updateCategory(Request $request, $slug): RedirectResponse //TODO:fix this
     {
-        $validated = $request->validated();
+        $validated = $this->validateCategory($request);
         $category = FaqCategory::where('slug', $slug)->firstOrFail();
         $category->update($validated);
-        return redirect()->route('admin.faq.category')->with('success', 'Category updated');
+        return redirect()->route('admin.faq')->with('success', 'Category updated');
     }
 
     public function destroyCategory($slug)
     {
-
         $category = FaqCategory::where('slug', $slug)->firstOrFail();
         $category->delete();
-        return redirect()->route('admin.faq.category')->with('success', 'Category deleted');
+        return redirect()->route('admin.faq')->with('success', 'Category deleted');
     }
-
 }
