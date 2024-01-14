@@ -16,5 +16,16 @@
                     @endforeach
                 </select>
             </div>
+        <div class="errors" id="errorMessage">
+            @error('question')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('answer')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @error('category')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
 </x-admin-form>
 </x-app-admin>

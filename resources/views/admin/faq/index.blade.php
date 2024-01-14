@@ -8,7 +8,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <x-nav-link href="{{route('faq.create')}}" style="color: black; border: 1px solid black; border-radius: 5%; margin-bottom: 3rem; margin-left: 2rem">Create FAQ</x-nav-link>
+                    <div class="links">
+                    <x-nav-link href="{{route('faq.create')}}" >Create FAQ</x-nav-link>
+                    <x-nav-link href="{{route('faq.category.create')}}">Create FAQ Category</x-nav-link>
+                    </div>
                     <ul>
                         @foreach ($faqs as $faq)
                             <div class="mb-4 ">
@@ -34,4 +37,12 @@
         </div>
     </div>
 </x-app-admin>
+<style>
+    .links {
+        color: black;
+        border-bottom: 1px solid navy;
+        border-radius: 5%;
+        margin-bottom: 3rem;
+        }
+</style>
 
