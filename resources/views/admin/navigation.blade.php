@@ -22,10 +22,6 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,159,255,1) 100%
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 {{ __('Manage FAQ') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.faq.category')" :active="request()->routeIs('admin.faq.category')"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                {{ __('Manage FAQ-categories') }}
-                            </x-nav-link>
                             <x-nav-link :href="route('admin.news')" :active="request()->routeIs('admin.news')"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 {{ __('Manage Newsitems') }}
