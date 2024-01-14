@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Middleware\UserIsAdmin;
+use App\Models\ContactFormResponse;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,18 +56,20 @@ Route::middleware(UserIsAdmin::class)->group(function () {
     });
 
     Route::controller(FaqController::class)->group(function () {
+        //FAQ Pairs
         Route::get('/admin/faq', 'showAdminFaq')->name('admin.faq');
         Route::get('/admin/faq/new', 'create')->name('faq.create');
-        Route::post('/admin/faq/new', 'store')->name('faq.store');//TODO: fix form submission error
-        Route::get('/admin/faq/{slug}', 'edit')->name('faq.edit');//TODO: create view
-        Route::patch('/admin/faq/{slug}', 'update')->name('faq.update');
-        Route::delete('/admin/faq/{slug}',  'destroy')->name('faq.destroy');//TODO: update view to handle deletion
-        Route::get('/admin/faq/category', 'showAdminCategory')->name('admin.faq.category');
-        Route::get('/admin/faq/category/new', 'createCategory')->name('faq.category.create');
-        Route::post('/admin/faq/category/store', 'storeCategory')->name('faq.category.store');
-        Route::get('/admin/faq/category/{slug}', 'editCategory')->name('faq.category.edit');
-        Route::patch('/admin/faq/category/{slug}', 'updateCategory')->name('faq.category.update');
-        Route::delete('/admin/faq/category/{slug}', 'destroyCategory')->name('faq.category.destroy');
+        Route::post('/admin/faq/new', 'store')->name('faq.store');
+        Route::get('/admin/faq/{slug}', 'edit')->name('faq.edit');
+        Route::post('/admin/faq/{slug}', 'update')->name('faq.update');
+        Route::delete('/admin/faq/{slug}',  'destroy')->name('faq.destroy');
+
+        //Category
+        Route::get('/admin/faq/categories/new', 'createCategory')->name('faq.category.create');
+        Route::post('/admin/faq/categories/store', 'storeCategory')->name('faq.category.store');
+        Route::get('/admin/faq/categories/{slug}', 'editCategory')->name('faq.category.edit');//TODO: Make this work
+        Route::patch('/admin/faq/categories/{slug}', 'updateCategory')->name('faq.category.update');//TODO: Make this work
+        Route::delete('/admin/faq/categories/{slug}', 'destroyCategory')->name('faq.category.destroy');
     });
 
     Route::controller(NewsItemController::class)->group(function () {
@@ -80,8 +83,8 @@ Route::middleware(UserIsAdmin::class)->group(function () {
     });
 
     Route::controller(ContactFormResponseController::class)->group(function(){
-        //
-        Route::get('/contact-forms', 'showAdminContactForms')->name('admin.contact-forms');
+        //If time left, make views and make these routes work
+        Route::get('/contact-forms-response', 'showAdminContactForms')->name('admin.contact-forms');
         Route::get('/contact-form-response/new', 'create')->name('contact-form-response.create');
         Route::post('/contact-form-response/store', 'store')->name('contact-form-response.store');
         Route::get('/contact-form-response/{contact-form-id}', 'edit')->name('contact-form-response.edit');
@@ -105,11 +108,13 @@ Route::controller(ContactFormController::class)->group(function(){
 });
 
 Route::controller(AirlineController::class)->group(function(){
+    //TODO:Make this work
     Route::get('/airline', 'index')->name('airline.index');
     Route::get('/airline/{slug}', 'show')->name('airline.show');
 });
 
 Route::controller(ArticleController::class)->group(function(){
+    //TODO:Make this work
     Route::get('/article', 'index')->name('article.index');
     Route::get('/article/{slug}', 'show')->name('article.show');
 });
