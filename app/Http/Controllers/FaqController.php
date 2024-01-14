@@ -81,7 +81,7 @@ class FaqController extends Controller
         ]);
     }
 
-    public function update(Request $request, $slug): RedirectResponse //TODO:fix this
+    public function update(Request $request, $slug): RedirectResponse
     {
         $validated = $this->validateFaq($request);
         $faq = Faq::where('slug', $slug)->firstOrFail();
@@ -130,7 +130,7 @@ class FaqController extends Controller
         ]);
     }
 
-    public function updateCategory(Request $request, $slug): RedirectResponse //TODO:fix this
+    public function updateCategory(Request $request, $slug): RedirectResponse
     {
         $validated = $this->validateCategory($request);
         $category = FaqCategory::where('slug', $slug)->firstOrFail();

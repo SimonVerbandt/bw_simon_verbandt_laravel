@@ -46,12 +46,10 @@ Route::middleware(UserIsAdmin::class)->group(function () {
     })->name('admin');
 
     Route::controller(AdminController::class)->group(function () {
-        //TODO:Make views and make these routes work
         Route::get('/admin/users', 'showAdminUsers')->name('admin.users');
         Route::get('/admin/users/new', 'create')->name('users.create');
-        Route::post('/admin/users/store', 'store')->name('users.store');
-        Route::get('/admin/users/{name}', 'edit')->name('users.edit');
-        Route::patch('/admin/users/{name}', 'update')->name('users.update');
+        Route::post('/admin/users/new', 'store')->name('users.store');
+        Route::post('/admin/users/{name}', 'update')->name('users.update');//TODO:fix
         Route::delete('/admin/users/{name}', 'destroy')->name('users.destroy');
     });
 
@@ -66,14 +64,13 @@ Route::middleware(UserIsAdmin::class)->group(function () {
 
         //Category
         Route::get('/admin/faq/categories/new', 'createCategory')->name('faq.category.create');
-        Route::post('/admin/faq/categories/store', 'storeCategory')->name('faq.category.store');
+        Route::post('/admin/faq/categories/new', 'storeCategory')->name('faq.category.store');
         Route::get('/admin/faq/categories/{slug}', 'editCategory')->name('faq.category.edit');
         Route::post('/admin/faq/categories/{slug}', 'updateCategory')->name('faq.category.update');
         Route::delete('/admin/faq/categories/{slug}', 'destroyCategory')->name('faq.category.destroy');
     });
 
     Route::controller(NewsItemController::class)->group(function () {
-        //TODO: Make views and make these routes work
         Route::get('/admin/news', 'showAdminNews')->name('admin.news');
         Route::get('/admin/news/new',  'create')->name('news.create');
         Route::post('/admin/news/new', 'store')->name('news.store');
@@ -86,7 +83,7 @@ Route::middleware(UserIsAdmin::class)->group(function () {
         //If time left, make views and make these routes work
         Route::get('/contact-forms-response', 'showAdminContactForms')->name('admin.contact-forms');
         Route::get('/contact-form-response/new', 'create')->name('contact-form-response.create');
-        Route::post('/contact-form-response/store', 'store')->name('contact-form-response.store');
+        Route::post('/contact-form-response/new', 'store')->name('contact-form-response.store');
         Route::get('/contact-form-response/{contact-form-id}', 'edit')->name('contact-form-response.edit');
         Route::post('/contact-form-response/{contact-form-id}', 'update')->name('contact-form-response.update');
         Route::delete('/contact-form-response/{contact-form-id}', 'destroy')->name('contact-form-response.destroy');

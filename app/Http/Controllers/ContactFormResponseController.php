@@ -14,7 +14,7 @@ class ContactFormResponseController extends Controller
             'contactFormResponses' => ContactFormResponse::all(),
         ]);
     }
-    
+
     public function create(Request $request)
     {
         $validated = $request->validate([
@@ -32,3 +32,4 @@ class ContactFormResponseController extends Controller
         }
     }
 }
+//TODO: If time, complete

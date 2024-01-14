@@ -14,6 +14,10 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,159,255,1) 100%
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center space-x-4">
+                            <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {{ __('Manage Users') }}
+                            </x-nav-link>
                             <x-nav-link :href="route('admin.contact-forms')" :active="request()->routeIs('admin.contact-forms')"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 {{ __('Manage Contact Messages') }}
