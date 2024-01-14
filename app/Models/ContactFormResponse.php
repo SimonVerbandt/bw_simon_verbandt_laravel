@@ -14,9 +14,9 @@ class ContactFormResponse extends Model
         'admin_id',
         'contact_form_id',
     ];
-    public function user()
+    public function admin()
     {
-        return $this->belongsTo(User::class, 'admin_id');
+        return $this->belongsTo(admin::class, 'admin_id');
     }
     public function contact_form()
     {

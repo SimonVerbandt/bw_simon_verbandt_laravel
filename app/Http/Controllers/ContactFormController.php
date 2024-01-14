@@ -8,34 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactFormController extends Controller
 {
-    //create CRUD operations for the contact form
     public function show()
     {
         return view('contact-form.show');
     }
     public function submit(Request $request)
     {
-        $user = $request->user();
-
         $validated = $request->validate([
-            'subject' => 'required|string',
+            'subject' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
-        if(!$validated['subject'] || !$validated['content'])
-            return redirect()->route('contact-form.show')->withErrors('Please fill in all fields');
-        else{
-
-                    $contactForm = new ContactForm();
-                    $contactForm->subject = $request->input('subject');
-                    $contactForm->content = $request->input('content');
-                    $contactForm->author_id = $user->id;
-                    $contactForm->save();
-
-        }
-
-        return view('contact-form.success');
+        $contactForm = ContactForm::create([
+            'subject' => $validated['subject'],
+            'content' => $validated['content'],
+            'author_id' => Auth::id(),
+        ]);
+        $contactForm->save();
+        return redirect()->route('contact-form.show')->with('success', 'Contact form submitted');
     }
-
-
-
 }

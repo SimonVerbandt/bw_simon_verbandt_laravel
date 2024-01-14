@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->text('content');
-            $table->date('published_at');
-            $table->foreignId('author_id')->constrained('users');
-            $table->integer('slug');
+            $table->date('published_at')->nullable();
+            $table->foreignId('author_id')->constrained('admins')->onDelete('cascade');
+            $table->string('slug')->unique();
         });
 
     }

@@ -13,21 +13,25 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,159,255,1) 100%
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('airline.index')" :active="request()->routeIs('airline.index')">
-                        {{ __('Airlines') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
-                        {{ __('News') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
-                        {{ __('FAQ') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
-                        {{ __('About') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('contact-form.show')" :active="request()->routeIs('contact-form.show')">
-                        {{ __('Contact us') }}
-                    </x-nav-link>
+                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-center space-x-4">
+                            <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {{ __('Manage Users') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.contact-forms')" :active="request()->routeIs('admin.contact-forms')"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {{ __('Manage Contact Messages') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.faq')" :active="request()->routeIs('admin.faq')"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {{ __('Manage FAQ') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.news')" :active="request()->routeIs('admin.news')"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {{ __('Manage Newsitems') }}
+                            </x-nav-link>
+                        </div>
+
                 </div>
             </div>
 
@@ -51,11 +55,6 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(0,159,255,1) 100%
                     </x-slot>
 
                     <x-slot name="content">
-                        @if (Auth::user()->isAdmin())
-                            <x-dropdown-link :href="route('admin')">
-                                {{ __('Admin Panel') }}
-                            </x-dropdown-link>
-                        @endif
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

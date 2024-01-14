@@ -1,7 +1,7 @@
 @extends('faq.index')
 @section('faq-content')
 @if($slug === 'general')
-    <h2>General</h2>
+    <h2 class="">General</h2>
 @elseif($slug ==='account-information')
     <h2>Account</h2>
 @endif
