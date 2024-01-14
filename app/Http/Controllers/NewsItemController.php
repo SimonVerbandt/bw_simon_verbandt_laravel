@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewsItemRequest;
 use Illuminate\Http\Request;
 use App\Models\NewsItem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NewsItemController extends Controller
 {
@@ -32,14 +33,31 @@ class NewsItemController extends Controller
         return view('admin.news.create');
     }
 
-    public function store(NewsItemRequest $request): RedirectResponse
+    public function validateNews(Request $request): array
     {
-        $validated = $request->validated();
-        $newsItem = NewsItem::create($validated);
-        $newsItem->fill($validated);
-        $newsItem->slug = Str::slug($validated['title']);
-        $newsItem->published_at = now();
-        $newsItem->image = $validated['image'] ?? null;
+        return $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+        ]);
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $this->validateNews($request);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            $imageUrl = Storage::url($imagePath);
+        } else {
+            $imageUrl = null;
+        }
+        $newsItem = NewsItem::create([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'slug' => Str::slug($validated['title']),
+            'published_at' => now(),
+            'image' => $imageUrl,
+            'author_id' => Auth::id(),
+        ]);
         $newsItem->save();
         return redirect()->route('admin.news')->with('success', 'News item created');
     }
@@ -54,9 +72,9 @@ class NewsItemController extends Controller
         ]);
     }
 
-    public function update(NewsItemRequest $request, $slug): RedirectResponse
+    public function update(Request $request, $slug): RedirectResponse
     {
-        $validated = $request->validated();
+        $validated = $this->validateNews($request);
         $newsItem = NewsItem::where('slug', $slug)->firstOrFail();
         $newsItem->update($validated);
         return redirect()->route('admin.news')->with('success', 'News item updated');

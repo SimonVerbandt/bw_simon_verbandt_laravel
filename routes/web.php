@@ -67,8 +67,8 @@ Route::middleware(UserIsAdmin::class)->group(function () {
         //Category
         Route::get('/admin/faq/categories/new', 'createCategory')->name('faq.category.create');
         Route::post('/admin/faq/categories/store', 'storeCategory')->name('faq.category.store');
-        Route::get('/admin/faq/categories/{slug}', 'editCategory')->name('faq.category.edit');//TODO: Make this work
-        Route::patch('/admin/faq/categories/{slug}', 'updateCategory')->name('faq.category.update');//TODO: Make this work
+        Route::get('/admin/faq/categories/{slug}', 'editCategory')->name('faq.category.edit');
+        Route::post('/admin/faq/categories/{slug}', 'updateCategory')->name('faq.category.update');
         Route::delete('/admin/faq/categories/{slug}', 'destroyCategory')->name('faq.category.destroy');
     });
 
@@ -78,7 +78,7 @@ Route::middleware(UserIsAdmin::class)->group(function () {
         Route::get('/admin/news/new',  'create')->name('news.create');
         Route::post('/admin/news/new', 'store')->name('news.store');
         Route::get('/admin/news/{slug}', 'edit')->name('news.edit');
-        Route::patch('/admin/news/{slug}', 'update')->name('news.update');
+        Route::post('/admin/news/{slug}', 'update')->name('news.update');
         Route::delete('/admin/news/{slug}', 'destroy')->name('news.destroy');
     });
 
@@ -88,7 +88,7 @@ Route::middleware(UserIsAdmin::class)->group(function () {
         Route::get('/contact-form-response/new', 'create')->name('contact-form-response.create');
         Route::post('/contact-form-response/store', 'store')->name('contact-form-response.store');
         Route::get('/contact-form-response/{contact-form-id}', 'edit')->name('contact-form-response.edit');
-        Route::patch('/contact-form-response/{contact-form-id}', 'update')->name('contact-form-response.update');
+        Route::post('/contact-form-response/{contact-form-id}', 'update')->name('contact-form-response.update');
         Route::delete('/contact-form-response/{contact-form-id}', 'destroy')->name('contact-form-response.destroy');
     });
 });
