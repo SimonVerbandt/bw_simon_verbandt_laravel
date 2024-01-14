@@ -14,13 +14,19 @@ class ContactFormController extends Controller
     {
         return view('contact-form.show');
     }
-    public function submit(ContactRequest $request)
+    public function submit(Request $request)
     {
-        $validated = $request->validated();
-        $contactForm = ContactForm::create($validated);
-        $contactForm->fill($validated);
-        $contactForm->user_id = Auth::id();
+        $validated = $request->validate([
+            'subject' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+        $contactForm = ContactForm::create([
+            'subject' => $validated['subject'],
+            'content' => $validated['content'],
+            'author_id' => Auth::id(),
+        ]);
         $contactForm->save();
         return redirect()->route('contact-form.show')->with('success', 'Contact form submitted');
+        //TODO: Format all controllers so they behave the same as this one
     }
 }

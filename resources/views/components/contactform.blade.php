@@ -4,11 +4,11 @@
         @method('POST')
         <div class="form-input">
             <label for="subject">Subject: </label>
-            <x-text-input id="contact-form-subject" name="subject" type="text" class="mt-1 block w-full" autocomplete="current-password"/>
+            <x-text-input id="contact-form-subject" name="subject" type="text" class="mt-1 block w-full"/>
         </div>
         <div class="form-textarea">
             <label for="content">Content: </label>
-            <textarea id="contact-form-content" name="content" class="mt-1 block w-full" autocomplete="current-password"></textarea>
+            <textarea id="contact-form-content" name="content" class="mt-1 block w-full" ></textarea>
         </div>
         <div class="button">
             <x-primary-button type="submit" class="btn btn-primary" >{{ __('Send') }}</x-primary-button>
