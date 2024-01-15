@@ -60,10 +60,21 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function changeInfo(ProfileUpdateRequest $request): RedirectResponse
+    public function changeInfo(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-        $request->user()->save();
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user = User::where('id', Auth::id())->firstOrFail();
+
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $avatarUrl = Storage::url($avatarPath);
+            $user->avatar = $avatarUrl;
+        }
+
+        $user->birthday = $request->input('birthday') ?? $user->birthday;
+        $user->about_me = $request->input('about_me') ?? $user->about_me;
+        $user->avatar = $request->hasFile('avatar') ? $avatarUrl : $user->avatar;
+
+        $user->save();
+        return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
 }

@@ -828,48 +828,66 @@
                 padding: 2rem
             }
         }
+
+        .bg-custom-light {
+            background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(0,159,255,1) 0%, rgba(255,255,255,1) 100%);        }
+
+        header{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem;
+            padding: 2rem;
+
+        }
+
     </style>
 </head>
 
 <body class="antialiased">
 
     <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-custom-light dark:bg-custom-dark selection:bg-red-500 selection:text-white">
         @if (Route::has('login'))
             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                 @auth
                     <a href="{{ url('/dashboard') }}"
-                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                        class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                 @else
                 <a href="{{ route('contact-form.show') }}"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Contact us
+                class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Contact us
                 </a>
                 <a href="{{ route('news.index') }}"
-                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">News
+                class="ml-4 font-semibold text-gray-600 hover:text-gray-900  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">News
                 </a>
                 <a href="{{ route('faq.index') }}"
-                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">FAQ
+                class="ml-4 font-semibold text-gray-600 hover:text-gray-900  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">FAQ
+                </a>
+                <a href="{{ route('about') }}"
+                class="ml-4 font-semibold text-gray-600 hover:text-gray-900  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">About
                 </a>
                     <a href="{{ route('login') }}"
-                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
                         in</a>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
-                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                            class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
                     @endif
                 @endauth
             </div>
         @endif
         <div class="ml-8">
-            <h1 class="font-bold dark:text-gray-400">The Aviation Times</h1>
-            <h3>Welcome! Here you will find the latest news on the aviation industry. Login or sign up to get more
+            <header>
+            <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            <h1 class="font-bold text-gray-600 ">The Aviation Times</h1>
+            <h3 class="font-semibold text-gray-600">Welcome! Here you will find the latest news on the aviation industry. Login or sign up to get more
                 features!</h3>
             </header>
-            <div class="sm:flex sm:flex-col sm:justify-center sm:align-top">
-                <ol>
                     @foreach ($articles as $article)
-                        <div class="ml-4 mt-6">
+                    <div class="sm:flex sm:flex-col sm:justify-center sm:align-top">
                             <x-article>
                                 @if (isset($article->image))
                                     <x-slot name="image">{{ $article->image }}</x-slot>
@@ -880,10 +898,8 @@
                                 <x-slot name="published_at">{{ $article->published_at }}</x-slot>
                             </x-article>
                         </div>
-                    @endforeach
-                </ol>
+                            @endforeach
 
-            </div>
 
 
 
@@ -891,3 +907,4 @@
 </body>
 
 </html>
+
