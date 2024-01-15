@@ -20,12 +20,14 @@ class ContactFormSeeder extends Seeder
             'subject' => 'Test message',
             'content' => 'This is a test message',
             'author_id' => $user1->id,
+            'author_type' => 'user',
         ]);
 
         ContactForm::create([
             'subject' => 'Test message 2',
             'content' => 'This is a test message 2',
             'author_id' => $user2->id,
+            'author_type' => 'user',
         ]);
     }
 }

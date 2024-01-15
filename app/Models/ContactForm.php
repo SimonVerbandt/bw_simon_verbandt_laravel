@@ -12,11 +12,12 @@ class ContactForm extends Model
         'subject',
         'content',
         'author_id',
+        'author_type',
     ];
 
-    public function user()
+    public function author()
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->morphTo();
     }
 
 }

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Message sent!') }}
@@ -10,8 +10,13 @@
 
                 <h1>Thank you for your message!</h1>
                 <p>We will get back to you as soon as possible.</p>
-                <a href="{{ route('contact-form.show') }}">Back to contact form</a>
             </div>
+            @if(Auth::check())
+            <a href="{{ route('dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+            @else
+            <a href="{{ url('/') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+            @endif
         </div>
     </div>
-</x-app-layout>
+</x-guest-layout>
+

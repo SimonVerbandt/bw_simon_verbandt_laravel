@@ -117,6 +117,8 @@ Route::controller(ArticleController::class)->group(function(){
     Route::get('/article/{slug}', 'show')->name('article.show');
 });
 
+//TODO:About styling
+//TODO: Dashboard styling
 Route::get('/about', function(){
     return view('about');
 })->name('about');
