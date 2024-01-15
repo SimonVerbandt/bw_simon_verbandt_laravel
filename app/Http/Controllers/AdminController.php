@@ -54,29 +54,21 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'User created successfully');
     }
 
-    public function update(Request $request, $name): RedirectResponse
+    public function update(string $name): RedirectResponse
     {
         $user = User::where('name', $name)->firstOrFail();
+        $user->isAdmin != $user->isAdmin;
+        $user->isAdmin = true;
+        $user->save();
+        $admin = Admin::create([
+            'name' => $name,
+            'user_id' => $user->id,
+        ]);
+        $admin->save();
 
-        $validated = $this->validateUser($request);
-
-        DB::transaction(function () use ($user, $validated) {
-            $user->update($validated);
-
-            if ($validated['isAdmin'] == true) {
-                $admin = Admin::create([
-                    'name' => $validated['name'],
-                    'user_id' => $user->id,
-                ]);
-                $admin->save();
-            } else {
-                $admin = Admin::where('user_id', $user->id)->firstOrFail();
-                $admin->delete();
-            }
-        });
         return redirect()->route('admin.users')->with('success', 'User updated successfully');
-
     }
+
 
     public function destroy($name): RedirectResponse
     {

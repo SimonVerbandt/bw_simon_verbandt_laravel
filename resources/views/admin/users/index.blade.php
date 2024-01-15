@@ -21,21 +21,27 @@
                                 <p class="text-gray-700 text-base">Date of birth: {{ $user->birthday }}</p>
                                 <p class="text-gray-700 text-base">Email: {{ $user->email }}</p>
                                 @php
-                                    if($user -> isAdmin == true){
-                                        $display = "Yes";
-                                    }else{
-                                        $display = "No";
+                                    if ($user->isAdmin) {
+                                        $display = 'Yes';
+                                    } else {
+                                        $display = 'No';
                                     }
                                 @endphp
                                 <p class="text-gray-700 text-base">Admin: {{ $display }}</p>
                                 <div class="mt-6 flex justify-end" style="border-bottom: 1px solid black">
-                                        <form action="{{ route('users.update', ['name' => $user->name]) }}" method="POST">
+                                    @if ($user->id == Auth::user()->id || $user->isAdmin)
+                                        <div></div>
+                                    @else
+                                        <form action="{{ route('users.update', ['name' => $user->name]) }}"
+                                            method="POST">
                                             @csrf
                                             @method('POST')
-                                           <x-primary-button
+                                            <x-primary-button
                                                 href="{{ route('users.update', ['name' => $user->name]) }}"
-                                                style="margin-bottom: 10px" style="margin-right: 2rem">Promote/Demote</x-primary-button>
+                                                style="margin-bottom: 10px"
+                                                style="margin-right: 2rem">Promote</x-primary-button>
                                         </form>
+                                    @endif
                                     <form action="{{ route('users.destroy', ['name' => $user->name]) }}" method="POST">
                                         @csrf
                                         @method('DELETE')<x-danger-button
