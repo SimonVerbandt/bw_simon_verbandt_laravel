@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile', [ProfileController::class, 'changeInfo'])->name('profile.changeInfo');
 });
 
 
@@ -49,7 +50,7 @@ Route::middleware(UserIsAdmin::class)->group(function () {
         Route::get('/admin/users', 'showAdminUsers')->name('admin.users');
         Route::get('/admin/users/new', 'create')->name('users.create');
         Route::post('/admin/users/new', 'store')->name('users.store');
-        Route::post('/admin/users/{name}', 'update')->name('users.update');//TODO:fix
+        Route::post('/admin/users/{name}', 'update')->name('users.update');
         Route::delete('/admin/users/{name}', 'destroy')->name('users.destroy');
     });
 

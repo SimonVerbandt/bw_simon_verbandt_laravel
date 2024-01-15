@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -36,12 +36,18 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validateUser($request);
+        if($request->hasFile('avatar')){
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $avatarUrl = Storage::url($avatarPath);
+        } else {
+            $avatarUrl = null;
+        }
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
             'birthday' => $request->input('birthday'),
-            'avatar' => $request->input('avatar'),
+            'avatar' => $avatarUrl,
             'isAdmin' => $validated['isAdmin'],
             'about_me' => $request->input('about_me'),
         ]);
