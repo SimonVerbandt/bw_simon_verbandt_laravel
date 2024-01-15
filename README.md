@@ -9,4 +9,5 @@
 
 ## About page for source list
 
-# You may use my API-key for the articles (already hardcoded in). Cap: 100-requests/day. Otherwise make an account at Gnews.io and copy paste your API key to the $apikey variable in the fetch-function inside the ArticleController file. Enjoy my website!
+### You may use my API-key for the articles (already hardcoded in). 
+Cap: 100-requests/day. Otherwise make an account at Gnews.io and copy paste your API key to the $apikey variable in the fetch-function inside the ArticleController file. Enjoy my website!

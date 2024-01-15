@@ -24,6 +24,7 @@
         <li><a href="https://stackoverflow.com/">Stack Overflow</a></li>
         <li><a href="https://gnews.io/">GNEWS API</a></li>
 
+        <h1><a href="https://github.com/SimonVerbandt/bw_simon_verbandt_laravel">Github Repo for this project</a></h1>
     </ul>
 </div>
 </div>
