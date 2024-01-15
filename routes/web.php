@@ -30,7 +30,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard', [
+        'articles' => App\Models\Article::all(),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -106,19 +108,13 @@ Route::controller(ContactFormController::class)->group(function(){
 });
 
 Route::controller(AirlineController::class)->group(function(){
-    //TODO:Make this work
+
     Route::get('/airline', 'index')->name('airline.index');
-    Route::get('/airline/{slug}', 'show')->name('airline.show');
+    Route::get('/airline/{name}', 'show')->name('airline.show');
 });
 
-Route::controller(ArticleController::class)->group(function(){
-    //TODO:Make this work
-    Route::get('/article', 'index')->name('article.index');
-    Route::get('/article/{slug}', 'show')->name('article.show');
-});
 
-//TODO:About styling
-//TODO: Dashboard styling
+
 Route::get('/about', function(){
     return view('about');
 })->name('about');

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
 
 class ArticleController extends Controller
 {
@@ -25,20 +23,5 @@ class ArticleController extends Controller
             ] );
         }
         return json_decode($fetch);
-    }
-
-    public function show($airline_name): \Illuminate\View\View| string{
-        if($airline_name == null){
-            $articles = ArticleController::fetch(null);
-            return view('home', [
-                'articles' => $articles -> articles,
-            ]);
-        }
-    else{
-            $articles = ArticleController::fetch($airline_name);
-            return route('airline.show', ['airline_name' => $airline_name,
-                'articles' => $articles -> articles,
-            ]);
-        }
     }
 }
